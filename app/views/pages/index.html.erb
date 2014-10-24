@@ -1,0 +1,4 @@
+<%= content_for :placeholders do %>
+  <%= render "layouts/placeholder", label: 'Facebook', text: 'lorem ipsum', link: @oauth.url_for_oauth_code %>
+  <%= render "layouts/placeholder", label: 'Twitter', text: 'lorem ipsum', link: :nil %>
+<% end %>

@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
-  resources :configurations
+  get 'pages/index'
+  get 'pages/save_facebook_token', as: 'facebook_callback'
+
+  resources :accounts
 
   devise_for :users
 
-  root to: 'configurations#index'
-  
+  root to: 'pages#index'
+
 end
