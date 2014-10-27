@@ -1,4 +1,39 @@
+<%= provide :title, 'Feed' %>
 <%= content_for :placeholders do %>
-  <%= render "layouts/placeholder", label: 'Facebook', text: 'lorem ipsum', link: @oauth.url_for_oauth_code %>
-  <%= render "layouts/placeholder", label: 'Twitter', text: 'lorem ipsum', link: :nil %>
+  <%= render(
+      "layouts/placeholder",
+      label: 'Facebook',
+      text: 'lorem ipsum',
+      link: @fb_oauth.url_for_oauth_code
+  ) %>
+
+  <% if @twitter_token.nil? || @twitter_secret.nil? %>
+      <%= render(
+        "layouts/placeholder",
+        label: 'Twitter',
+        text: 'No has iniciado sesión con twitter!',
+        link: '/auth/twitter'
+      ) %>
+    <% else %>
+      <%= render(
+        "layouts/placeholder",
+        label: @twitter_user.screen_name,
+        text: @twitter_user.description,
+        image_src: @twitter_user.profile_image_url.to_s,
+        link: root_path
+      ) %>
+    <% end %>
+
+      <%= render(
+        "layouts/placeholder",
+        label: current_user.username,
+        text: current_user.description,
+        image_src: current_user.profile_picture_url(:thumb),
+        link: root_path
+      ) %>
+<% end %>
+<%= form_for @post, class: 'form-horizontal' do |f| %>
+  <%= render "shared/errors", object: @post %>
+  <%= f.text_area :value, class: "form-control" %>
+  <%= f.submit "Publicar!", class: "btn btn-success" %>
 <% end %>

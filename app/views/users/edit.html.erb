@@ -1,0 +1,27 @@
+<%= provide :title, "Editar perfil de #{current_user.email}" %>
+<%= form_for @user, class: 'form-horizontal' do |f| %>
+  <%= render "shared/errors", object: @user %>
+  <i>La foto se actualizará cuando se envíe el formulario</i>
+  <div class="form-group">
+    <%= f.file_field :profile_picture, accept: "image/*" %>
+    <% if @user.profile_picture != '' %>
+      <%= image_tag @user.profile_picture_url(:thumb) %>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :username, 'Nombre de usuario (Gatherer)', class: "col-sm-4 control-label" %>
+    <%= f.text_field :username, accept: "image/*", class: 'form-control' %>
+  </div>
+
+  <div class="from-group">
+    <%= f.label :description, 'Bio', class: 'col-sm-2 control-label' %>
+    <%= f.text_area :description, class: "form-control" %>
+  </div>
+  &nbsp;
+  <div class="form-group">
+    <div class="col-sm-offset-10 col-sm-10">
+      <%= f.submit "Guardar", class: "btn btn-success" %>
+    </div>
+  </div>
+<% end %>

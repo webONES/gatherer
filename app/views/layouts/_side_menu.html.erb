@@ -1,6 +1,14 @@
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar">
-    <li class="active"><a href="#">Feed</a></li>
+    <%= content_tag :li, class: "#{is_active?('pages', 'index')}" do %>
+      <%= link_to "Feed", root_path %>
+    <% end %>
+    <%= content_tag :li, class: "#{is_active?('accounts')}" do %>
+      <%= link_to accounts_path do %>
+        <%= fa_icon('accounts') %>
+        Cuentas vinculadas
+      <% end %>
+    <% end %>
     <li><a href="#">Gatherer</a></li>
     <li><a href="#">Facebook</a></li>
     <li><a href="#">Twitter</a></li>
