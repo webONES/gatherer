@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_action :get_twitter_token, only: [:index]
+  before_action :get_facebook_token, only: [:index]
 
   def index
     @fb_oauth = Koala::Facebook::OAuth.new(
@@ -8,9 +9,10 @@ class PagesController < ApplicationController
       facebook_callback_url
     )
     @post = Post.new
+    @feed = Post.all.limit(10)
   end
 
-  def save_facebook_token
-
+  def gatherer
+    @posts = Post.all.limit(25)
   end
 end

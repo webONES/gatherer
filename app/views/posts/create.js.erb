@@ -1,0 +1,2 @@
+$(".jumbotron").prepend("<%= escape_javascript(render('shared/media_element', text: @post.value, heading: @post.user.username, img: @post.user.profile_picture_url(:thumb))) %>");
+$("#post_value").val("");

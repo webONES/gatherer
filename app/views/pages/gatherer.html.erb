@@ -1,0 +1,6 @@
+<%= provide :title, "Publicaciones recientes en Gatherer!" %>
+<div class="jumbotron">
+  <% @posts.each do |post| %>
+    <%= render('shared/media_element', text: post.value, heading: post.user.username, img: post.user.profile_picture_url(:thumb)) %>
+  <% end %>
+</div>

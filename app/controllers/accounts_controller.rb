@@ -3,16 +3,13 @@ class AccountsController < ApplicationController
 
   def index
     @accounts = current_user.accounts
-    # respond_with(@accounts)
   end
 
   def show
-    # respond_with(@account)
   end
 
   def new
     @account = Account.new
-    # respond_with(@account)
   end
 
   def edit
@@ -21,44 +18,40 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(account_params)
     @account.save
-    # respond_with(@account)
+    redirect_to accounts_path
   end
 
   def update
     @account.update(account_params)
-    # respond_with(@account)
+    redirect_to accounts_path
   end
 
   def destroy
     @account.destroy
-    # respond_with(@account)
+    redirect_to accounts_path
   end
 
   def twitter_callback
-      save_twitter_tokens
-      flash[:success] = I18n.t('twitter.saved_token')
+    save_twitter_tokens
+    flash[:success] = I18n.t('twitter.saved_token')
+    redirect_to root_path
+  end
+
+  def save_facebook_token
+      access_token = Koala::Facebook::OAuth.new(
+        279720252237827,
+        '5c087772fca552a7563a444a98262edb',
+        facebook_callback_url
+      ).get_access_token(params[:code])
+      user = Koala::Facebook::API.new(access_token)
+      @name = user.get_object('me')['name']
+      current_user.accounts.create(key: 'fb-access-token', name: @name, value: access_token)
+
+      flash[:success] = I18n.t('fb.saved_token')
       redirect_to root_path
-    end
-
-    # def instagram_login
-    #   redirect_to Instagram.authorize_url(:redirect_uri => instagram_callback_sessions_url, :scope => 'comments')
-    # end
-    #
-    # def instagram_callback
-    #   response = Instagram.get_access_token(params[:code], :redirect_uri => instagram_callback_sessions_url)
-    #   username = Instagram.client(access_token: response.access_token).user.username
-    #   Auth.create(key: 'instagram', value: response.access_token, name: "@#{username}")
-    #   redirect_to instagram_analytics_path
-    # end
-
+  end
 
   private
-    # def configure_instagram
-    #   Instagram.configure do |config|
-    #     config.client_id = Adminpanel.instagram_client_id
-    #     config.client_secret = Adminpanel.instagram_client_secret
-    #   end
-    # end
 
     def save_twitter_tokens
       twitter_user = "@#{request.env['omniauth.auth']['info']['nickname']}"

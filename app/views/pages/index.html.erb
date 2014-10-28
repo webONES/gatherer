@@ -1,17 +1,44 @@
 <%= provide :title, 'Feed' %>
 <%= content_for :placeholders do %>
-  <%= render(
+  <% if @fb_access_token.nil? %>
+    <%= render(
+        "layouts/placeholder",
+        label: 'Facebook',
+        text: 'No has iniciado sesión con Facebook!',
+        link: @fb_oauth.url_for_oauth_code
+    ) %>
+  <% else %>
+    <%= render(
+        "layouts/placeholder",
+        label: @fb_user["name"],
+        text: @fb_user["bio"],
+        image_src: @graph.get_picture(@fb_user['id']),
+        link: root_path
+    ) %>
+  <% end %>
+
+  <% if current_user.profile_picture != '' %>
+    <%= render(
       "layouts/placeholder",
-      label: 'Facebook',
-      text: 'lorem ipsum',
-      link: @fb_oauth.url_for_oauth_code
-  ) %>
+      label: current_user.username,
+      text: current_user.description,
+      image_src: current_user.profile_picture_url(:thumb),
+      link: root_path
+    ) %>
+  <% else %>
+    <%= render(
+      "layouts/placeholder",
+      label: current_user.username,
+      text: current_user.description,
+      link: edit_user(current_user)
+    ) %>
+  <% end %>
 
   <% if @twitter_token.nil? || @twitter_secret.nil? %>
       <%= render(
         "layouts/placeholder",
         label: 'Twitter',
-        text: 'No has iniciado sesión con twitter!',
+        text: 'No has iniciado sesión con Twitter!',
         link: '/auth/twitter'
       ) %>
     <% else %>
@@ -23,17 +50,24 @@
         link: root_path
       ) %>
     <% end %>
-
-      <%= render(
-        "layouts/placeholder",
-        label: current_user.username,
-        text: current_user.description,
-        image_src: current_user.profile_picture_url(:thumb),
-        link: root_path
-      ) %>
 <% end %>
-<%= form_for @post, class: 'form-horizontal' do |f| %>
+<%= form_for @post, class: 'form-horizontal', remote: true do |f| %>
   <%= render "shared/errors", object: @post %>
   <%= f.text_area :value, class: "form-control" %>
-  <%= f.submit "Publicar!", class: "btn btn-success" %>
+
+  <%= label_tag :Twitter, 'Publicar en twitter', class: "control-label" %>
+  <%= check_box_tag 'Twitter', 'Twitter', true %>
+
+  <%= label_tag :Facebook, 'Publicar en facebook', class: "control-label" %>
+  <%= check_box_tag 'Facebook', 'Facebook', true %>
+
+  <%= label_tag :Gatherer, 'Publicar en gatherer', class: "control-label" %>
+  <%= check_box_tag 'Gatherer', 'Gatherer', true %>
+
+  <%= f.submit "Publicar!", class: "btn btn-success", type: 'submit' %>
 <% end %>
+<div class="jumbotron">
+  <% @feed.each do |post| %>
+    <%= render "shared/media_element", text: post.value, heading: post.user.username, img: post.user.profile_picture_url(:thumb) %>
+  <% end %>
+</div>

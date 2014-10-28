@@ -10,12 +10,17 @@
   </div>
   <div class="navbar-collapse collapse">
     <ul class="nav navbar-nav navbar-right">
-      <li>
-        <%= link_to "Editar Perfil", edit_user_path(current_user) %>
-      </li>
-      <li>
-        <%= link_to "Editar correo", edit_user_registration_path %>
-      </li>
+      <% if current_user %>
+        <li>
+          <%= link_to "Editar Perfil", edit_user_path(current_user) %>
+        </li>
+        <li>
+          <%= link_to "Editar correo", edit_user_registration_path %>
+        </li>
+        <li>
+          <%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete %>
+        </li>
+      <% end %>
     </ul>
     <!-- <form class="navbar-form navbar-right">
       <input type="text" class="form-control" placeholder="Search...">
