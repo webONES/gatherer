@@ -21,7 +21,7 @@ class PostsController < ApplicationController
     @post.save
     logger.info params
     if params['Twitter'].present?
-      redirect_to twitter_publish_path
+      twitter_publish_path(@post.value)
     end
   end
 
@@ -29,11 +29,17 @@ class PostsController < ApplicationController
     @post.update(post_params)
   end
 
+
   def destroy
     @post.destroy
   end
 
   private
+    def twitter_publish_path(text)
+      get_twitter_token
+      @twitter_client.update(text)
+    end
+
     def set_post
       @post = Post.find(params[:id])
     end
