@@ -8,20 +8,19 @@
   port = ENV["BOXEN_MYSQL_PORT"] || "3306"
 %>
 
-development: &development
+development:
   adapter: mysql2
+  encoding: utf8
   database: social_gathering_development
   username: root
-<% if socket %>
-  host: localhost
-  socket: <%= socket %>
-<% else %>
+  password: root
   host: 127.0.0.1
-  port: <%= port %>
-<% end %>
+  port: 3306
 
 production:
   adapter: sqlite3
   database: db/production.sqlite3
   pool: 5
   timeout: 5000
+
+

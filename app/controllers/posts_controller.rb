@@ -19,6 +19,10 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user_id = current_user.id
     @post.save
+    logger.info params
+    if params['Twitter'].present?
+      redirect_to twitter_publish_path
+    end
   end
 
   def update
