@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'pages/index'
   get 'pages/gatherer'
   get 'pages/twitter'
-  get 'accounts/save_facebook_token', as: 'facebook_callback'
+  get 'pages/facebook'
 
   resources :accounts
 
@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   root to: 'pages#index'
 
+  get 'accounts/save_facebook_token', as: 'facebook_callback'
   get 'auth/twitter/callback', to: 'accounts#twitter_callback'
   # get 'twitter/publish', as: 'twitter_publish'
 

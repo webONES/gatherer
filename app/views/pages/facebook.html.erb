@@ -1,0 +1,11 @@
+<%= provide :title, "Publicaciones recientes en Facebook!" %>
+<div class="jumbotron">
+	<% @posts.each do |fb_post| %>
+	    <%= render(
+	    	'shared/media_element', 
+	    	text: fb_post['description'], 
+	    	heading: fb_post['from']['name'], 
+	    	img: fb_post['picture']
+		) %>
+  <% end %>
+</div>

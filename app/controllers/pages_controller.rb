@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   before_action :get_twitter_token, only: [:index, :twitter]
-  before_action :get_facebook_token, only: [:index]
+  before_action :get_facebook_token, only: [:index, :facebook]
 
   def index
     @fb_oauth = Koala::Facebook::OAuth.new(
@@ -20,5 +20,9 @@ class PagesController < ApplicationController
     
     @posts = @twitter_client.home_timeline.take(10)
     #18 publicaciones obtener el cliente de twitter para obtener el cliente del token
+  end
+
+  def facebook
+    @posts = @graph.get_connections("me", "home")
   end
 end
