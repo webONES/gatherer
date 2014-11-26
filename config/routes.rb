@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   get 'pages/index'
   get 'pages/gatherer'
+  get 'pages/twitter'
   get 'accounts/save_facebook_token', as: 'facebook_callback'
 
   resources :accounts

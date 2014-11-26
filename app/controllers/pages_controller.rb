@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :get_twitter_token, only: [:index]
+  before_action :get_twitter_token, only: [:index, :twitter]
   before_action :get_facebook_token, only: [:index]
 
   def index
@@ -14,5 +14,11 @@ class PagesController < ApplicationController
 
   def gatherer
     @posts = Post.all.limit(25)
+  end
+
+  def twitter
+    
+    @posts = @twitter_client.home_timeline.take(10)
+    #18 publicaciones obtener el cliente de twitter para obtener el cliente del token
   end
 end

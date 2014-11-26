@@ -1,0 +1,11 @@
+<%= provide :title, "Publicaciones recientes en Twitter!" %>
+<div class="jumbotron">
+	<% @posts.each do |tweet| %>
+	    <%= render(
+	    	'shared/media_element', 
+	    	text: tweet.text, 
+	    	heading: tweet.user.screen_name, 
+	    	img: tweet.user.profile_image_url.to_s
+		) %>
+  <% end %>
+</div>
