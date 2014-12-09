@@ -23,6 +23,10 @@ class PostsController < ApplicationController
     if params['Twitter'].present?
       twitter_publish_path(@post.value)
     end
+    if param['Facebook'].present?
+      face
+      #buscar metodo para publicar en facebook
+    end
   end
 
   def update
