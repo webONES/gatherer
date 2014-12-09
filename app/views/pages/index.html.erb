@@ -55,11 +55,16 @@
   <%= render "shared/errors", object: @post %>
   <%= f.text_area :value, class: "form-control" %>
 
+  
+  <% if @twitter_secret %>
   <%= label_tag :Twitter, 'Publicar en twitter', class: "control-label" %>
   <%= check_box_tag 'Twitter', true, true %>
+  <% end %>
 
+  <% if @fb_access_token %>
   <%= label_tag :Facebook, 'Publicar en facebook', class: "control-label" %>
   <%= check_box_tag 'Facebook', true, true %>
+  <% end %>
 
   <%= label_tag :Gatherer, 'Publicar en gatherer', class: "control-label" %>
   <%= check_box_tag 'Gatherer', 'Gatherer', true %>

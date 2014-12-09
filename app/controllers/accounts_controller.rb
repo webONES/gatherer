@@ -33,7 +33,7 @@ class AccountsController < ApplicationController
 
   def twitter_callback
     save_twitter_tokens
-    flash[:success] = I18n.t('twitter.saved_token')
+    flash[:success] = "Tu cuenta ha sido vinculada con twitter"
     redirect_to root_path
   end
 
@@ -47,7 +47,7 @@ class AccountsController < ApplicationController
       @name = user.get_object('me')['name']
       current_user.accounts.create(key: 'fb-access-token', name: @name, value: access_token)
 
-      flash[:success] = I18n.t('fb.saved_token')
+      flash[:success] = "Tu cuenta ha sido vinculada con Facebook"
       redirect_to root_path
   end
 

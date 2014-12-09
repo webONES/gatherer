@@ -13,16 +13,28 @@ class PagesController < ApplicationController
   end
 
   def gatherer
-    @posts = Post.all.limit(25)
+      @posts = Post.all.limit(25)
+    
   end
 
   def twitter
-    
-    @posts = @twitter_client.home_timeline.take(10)
+    if @twitter_secret.nil?
+      flash[:warning]= 'No has iniciado sesión en twitter'
+      redirect_to(pages_index_path)
+    else
+      @posts = @twitter_client.home_timeline.take(10)
+
+    end
+
     #18 publicaciones obtener el cliente de twitter para obtener el cliente del token
   end
 
   def facebook
+    if @fb_access_token.nil?
+      flash[:warning]= 'No has iniciado sesión en facebook'
+      redirect_to(pages_index_path)
+    else
     @posts = @graph.get_connections("me", "home")
+    end
   end
 end

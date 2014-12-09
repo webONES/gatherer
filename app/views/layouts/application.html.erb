@@ -23,11 +23,17 @@
     <%= render "layouts/top_bar" %>
   </div>
 
+
   <div class="container-fluid">
     <div class="row">
       <%= render "layouts/side_menu" %>
 
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <% flash.each do |flash, message| %>
+          <div class="alert alert-<%= flash %>">
+            <%= message %>
+          </div>
+        <% end %>
         <h1 class="page-header"><%= yield(:title) %></h1>
 
         <div class="row placeholders">

@@ -5,9 +5,10 @@
 	    	'shared/media_element', 
 	    	text: fb_post['description'], 
 	    	heading: fb_post['from']['name'], 
-	    	img: "default.png"
+	    	img: "default.png",
+	    	picture: fb_post['picture']
 		) %>
 
-		<%#= debug fb_post %>
+		<%= debug fb_post %>
   <% end %>
 </div>

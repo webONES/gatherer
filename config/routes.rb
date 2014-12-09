@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   root to: 'pages#index'
 
-  get 'accounts/save_facebook_token', as: 'facebook_callback'
+  get 'callback/save_facebook_token', to:'accounts#save_facebook_token', as: 'facebook_callback'
   get 'auth/twitter/callback', to: 'accounts#twitter_callback'
   # get 'twitter/publish', as: 'twitter_publish'
 
