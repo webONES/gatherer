@@ -2,13 +2,14 @@
 <div class="jumbotron">
 	<% @posts.each do |fb_post| %>
 	    <%= render(
-	    	'shared/media_element', 
-	    	text: fb_post['description'], 
-	    	heading: fb_post['from']['name'], 
+	    	'shared/media_element',
+				message: "#{fb_post['message']}#{fb_post['caption']}#{fb_post['']}",
+	    	text: fb_post['description'],
+				link: fb_post['link'],
+				picture: fb_post['picture'],
+	    	heading: fb_post['from']['name'],
 	    	img: "default.png",
-	    	picture: fb_post['picture']
+				story: fb_post['story']
 		) %>
-
-		<%= debug fb_post %>
   <% end %>
 </div>
