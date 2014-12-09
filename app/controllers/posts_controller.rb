@@ -24,7 +24,7 @@ class PostsController < ApplicationController
       twitter_publish_path(@post.value)
     end
     if param['Facebook'].present?
-      face
+      facebook_publish_path(@post.value)
       #buscar metodo para publicar en facebook
     end
   end
@@ -42,6 +42,11 @@ class PostsController < ApplicationController
     def twitter_publish_path(text)
       get_twitter_token
       @twitter_client.update(text)
+    end
+
+    def facebook_publish_path(text)
+      get_facebook_token
+      @graph.put_wall_post(text)
     end
 
     def set_post
