@@ -3,7 +3,21 @@
     <%= image_tag img, class: "img-responsive", width: 100, height: 100 %>
   </a>
   <div class="media-body">
-    <h4 class="media-heading"><%= heading %></h4>
-    <%= text %>
+    <h4 class="media-heading"><%= heading %> - <%= story if defined?(story) %></h4>
+    <% if defined?(link) %>
+      <%= link %>
+    <% end %>
+      <blockquote>
+      <% if defined?(message) %>
+        <%= message %>
+        <p>
+        </p>
+
+      <% end %>
+      <%= text %>
+    </blockquote>
+    <% if defined? picture %>
+      <%= image_tag picture, width: '150px', height: '150px' %>
+    <% end %>
   </div>
 </div>
